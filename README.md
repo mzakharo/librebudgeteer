@@ -8,3 +8,10 @@ An open source Budget Flutter app
 - multiple users (couples budgeting)
 - transaction and balanaces data is synced to your own InfluxDB database instance
 - transaction rules and budget categories are hosted in notion.so
+
+# Setup
+
+ - Setup plaid transaction rules page/database in notion.so. [example](https://github.com/mzakharo/librebudgeteer/blob/main/images/rules.PNG)
+ - Setup budgets in another notion.so page/database [example](https://github.com/mzakharo/librebudgeteer/blob/main/images/budgets.png)
+   
+ 
