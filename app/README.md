@@ -16,6 +16,13 @@ String notion_database = "DB_UUID";
 ```
 
  - Install flutter. run `flutter doctor` to make sure everythin is kosher.
+ 
+ Built with:
+ 
+```
+Flutter 3.10.6 • channel stable • https://github.com/flutter/flutter.git
+Tools • Dart 3.0.6 • DevTools 2.23.1
+```
 
  - Connect Phone via USB, with USB Debugging enabled.
 
