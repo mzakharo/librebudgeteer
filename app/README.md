@@ -1,4 +1,4 @@
-# budget
+# budget flutter app
 
 Setup:
 
@@ -32,3 +32,6 @@ Tools • Dart 3.0.6 • DevTools 2.23.1
  - To Release
 
 ```make.bat```
+
+
+App originally sourced from https://github.com/rsquared226/budget_my_life
