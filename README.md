@@ -1,5 +1,5 @@
 # LibreBudgeteer
-An open source Budget app
+An open source Budget Flutter app
 
 - mint style budgeting
 - automatic transaction sync and categorization using plaid service (Canada and US)
