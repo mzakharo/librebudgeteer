@@ -15,7 +15,7 @@ String notion_database = "DB_UUID";
 
 ```
 
- - Install flutter. run `flutter doctor` to make sure everythin is kosher.
+ - Install flutter. run `flutter doctor` to make sure everything is kosher.
  
  Built with:
  
