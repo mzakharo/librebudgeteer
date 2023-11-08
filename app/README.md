@@ -11,7 +11,7 @@ String influx_token = "token";
 String influx_bucket = "bucket";
 
 String notion_secret = "secret_XXX";
-String notion_database = "DB_UUID";
+String notion_database = "DB_BUDGETS_UUID";
 
 ```
 

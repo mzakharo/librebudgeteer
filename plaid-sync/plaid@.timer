@@ -1,0 +1,9 @@
+[Unit]
+Description=Run plaid
+Requires=plaid@.service
+[Timer]
+Unit=plaid@.service
+OnUnitInactiveSec=6hours
+Persistent=true
+[Install]
+WantedBy=timers.target

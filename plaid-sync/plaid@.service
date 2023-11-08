@@ -1,0 +1,11 @@
+[Unit]
+Description=plaid sync service
+Wants=plaid@.timer
+
+[Service]
+ExecStart=/usr/bin/python3 /home/%i/librebudgeteer/plaid-sync/plaid-sync.py -c sandbox.example -v -b
+WorkingDirectory=/home/%i/plaid-sync/
+User=%i
+
+[Install]
+WantedBy=multi-user.target

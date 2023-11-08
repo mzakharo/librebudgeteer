@@ -1,0 +1,4 @@
+plaid-python==7.1.0
+pandas
+influxdb-client
+notion-client

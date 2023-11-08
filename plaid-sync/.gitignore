@@ -1,0 +1,5 @@
+sandbox.example
+*.bkp
+/transactions.csv
+__pycache__
+/mint.csv
