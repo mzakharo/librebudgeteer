@@ -27,6 +27,7 @@ secrets.dart
 
 # Flutter/Dart/Pub related
 **/doc/api/
+GeneratedPluginRegistrant.swift
 **/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
