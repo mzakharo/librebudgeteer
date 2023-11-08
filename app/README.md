@@ -2,7 +2,7 @@
 
 Setup:
 
- - create a 'secrets.dart' file inside 'lib' folder with the following contents
+ - create a `secrets.dart` file inside `lib` folder with the following contents
 
 ```
 String influx_url = "http://your-influx-url.com:8086";
