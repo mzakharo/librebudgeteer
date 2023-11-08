@@ -3,11 +3,13 @@ An open source Budget Flutter app
 
 - mint style budgeting
 - automatic transaction sync and categorization using plaid service (Canada and US)
-- transaction rules (substring matching, fitering, re-categorization)
-- transaction editing and deleting
+- custom transaction sync rules (substring matching, fitering, re-categorization)
+- in-app transaction re-categorization and removal
 - multiple users (couples budgeting)
 - transaction and balanaces data is synced to your own InfluxDB database instance
 - transaction rules and budget categories are hosted in notion.so
+
+<img src="https://github.com/mzakharo/librebudgeteer/blob/main/images/dashboard.jpg" width="151" height="320"> <img src="https://github.com/mzakharo/librebudgeteer/blob/main/images/budgets.jpg" width="151" height="320"> <img src="https://github.com/mzakharo/librebudgeteer/blob/main/images/expenses.jpg" width="151" height="320"> <img src="https://github.com/mzakharo/librebudgeteer/blob/main/images/history.jpg" width="151" height="320"> 
 
 # Setup
 
