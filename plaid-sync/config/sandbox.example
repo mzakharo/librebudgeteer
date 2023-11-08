@@ -1,0 +1,27 @@
+[PLAID]
+client_id = XXXXXXXXXXXXX
+secret = XXXXXXXXXXXXXX
+public_key = xXXXXXXXXXXXXXXX
+environment = sandbox
+
+influx_token = INFLUX_TOKEN
+influx_url = http://your-influx-url:8086
+influx_org = YOUR_ORG
+influx_bucket = YOUR_BUCKET
+
+notion_secret = secret_XXXX
+notion_database = DB_RULES_UUID
+
+[plaid-sync]
+dbfile = money.db
+
+; account definitions will be added by plaid-sync
+; when --link-account step is run
+;
+; but if you already have Plaid access tokens, you
+; can add them as such:
+;
+; [Friendly Account Name]
+; access_token = XXXXXXXXXXXX
+; disabled=false 
+

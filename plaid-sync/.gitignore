@@ -1,4 +1,4 @@
-sandbox.example
+/sandbox.example
 *.bkp
 /transactions.csv
 __pycache__
