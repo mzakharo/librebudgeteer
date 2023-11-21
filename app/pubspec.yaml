@@ -31,9 +31,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   smooth_page_indicator: ^1.0.0+2
   settings_ui: ^2.0.1
-  url_launcher: ^6.1.11
   google_fonts: ^5.0.0
-  sqflite: ^2.0.1
   path: ^1.6.4
   collection: ^1.15.0-nullsafety.4
   influxdb_client: ^2.9.0

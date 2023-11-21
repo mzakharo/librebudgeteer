@@ -1,4 +1,4 @@
-import '../utils/db_helper.dart';
+//import '../utils/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -71,8 +71,9 @@ class ThemeProvider with ChangeNotifier {
   late ThemeType _themeType;
 
   Future<void> fetchAndSetTheme() async {
-    final settingsMap = await DBHelper.getSettingsMap();
-
+    /*
+    //final settingsMap = await DBHelper.getSettingsMap();
+    
     switch (settingsMap['theme']) {
       case 0:
         _themeType = ThemeType.Light;
@@ -85,18 +86,20 @@ class ThemeProvider with ChangeNotifier {
         break;
       // If there's no value, default to light or dark theme depending on
       // system theme.
+
       default:
-        final brightness = SchedulerBinding.instance.window.platformBrightness;
-        _themeType = brightness == Brightness.light ? ThemeType.Light : ThemeType.Dark;
-        DBHelper.updateSettings({'theme': brightness == Brightness.light ? 0 : 1});
-        break;
-    }
-    notifyListeners();
+      */
+    final brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    _themeType = brightness == Brightness.light ? ThemeType.Light : ThemeType.Dark;
+    //DBHelper.updateSettings({'theme': brightness == Brightness.light ? 0 : 1});
+    // break;
+    //  }
+    // notifyListeners();
   }
 
   set themeType(ThemeType themeType) {
     _themeType = themeType;
-    DBHelper.updateSettings({'theme': themeType.index});
+    //DBHelper.updateSettings({'theme': themeType.index});
     notifyListeners();
   }
 

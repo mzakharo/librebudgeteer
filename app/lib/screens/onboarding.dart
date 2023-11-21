@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-import '../utils/db_helper.dart';
+//import '../utils/db_helper.dart';
 
 class Onboarding extends StatelessWidget {
   static const routeName = '/onboarding';
@@ -49,29 +49,25 @@ class Onboarding extends StatelessWidget {
       PageViewModel(
         image: buildImage('Intro2'),
         title: 'Adding Transactions',
-        body:
-            'Click on the button in the bottom right of the dashboard screen to add a transaction!',
+        body: 'Click on the button in the bottom right of the dashboard screen to add a transaction!',
         decoration: pageDecoration,
       ),
       PageViewModel(
         image: buildImage('Intro3'),
         title: 'Customize Labels',
-        body:
-            'Open the drawer to customize labels. These help provide you with insights on how you earn/spend your money',
+        body: 'Open the drawer to customize labels. These help provide you with insights on how you earn/spend your money',
         decoration: pageDecoration,
       ),
       PageViewModel(
         image: buildImage('Intro4'),
         title: 'View Insights',
-        body:
-            'Click on the second bottom tab on the main screen to view your insights!',
+        body: 'Click on the second bottom tab on the main screen to view your insights!',
         decoration: pageDecoration,
       ),
       PageViewModel(
         image: buildImage('Intro5'),
         title: 'Get Started!',
-        body:
-            'You can always view this intro again by tapping "Help" in the drawer',
+        body: 'You can always view this intro again by tapping "Help" in the drawer',
         decoration: pageDecoration,
       ),
     ];
@@ -107,7 +103,7 @@ class Onboarding extends StatelessWidget {
       curve: Curves.easeInOutSine,
       onDone: () {
         if (!openedFromDrawer) {
-          DBHelper.onboardedUser();
+          //DBHelper.onboardedUser();
         }
         Navigator.pop(context);
       },

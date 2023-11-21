@@ -10,7 +10,6 @@ import './providers/theme_provider.dart';
 import './screens/home_tabs_screen.dart';
 import './screens/edit_labels_screen.dart';
 import './screens/settings_screen.dart';
-import './utils/db_helper.dart';
 import 'globals.dart' as globals;
 
 import 'package:package_info_plus/package_info_plus.dart';
@@ -28,8 +27,6 @@ Future<void> main() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
   globals.version = packageInfo.version;
-
-  final isOnboarded = await DBHelper.isOnboarded();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -52,7 +49,7 @@ Future<void> main() async {
           create: (_) => Labels(),
         ),
       ],
-      builder: (context, _) => MyApp(isOnboarded: isOnboarded),
+      builder: (context, _) => MyApp(isOnboarded: true),
     ),
   );
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../utils/db_helper.dart';
 //import 'package:notion_api/notion_databases.dart';
 //import 'package:notion_api/responses/notion_response.dart';
 
@@ -19,9 +18,9 @@ class Settings with ChangeNotifier {
   double income_amount = 0;
 
   Future<void> fetchAndSetSettings() async {
-    final settingsMap = await DBHelper.getSettingsMap();
-    _currencySymbol = settingsMap['currency'];
-    _showCurrency = settingsMap['showCurrency'] == 1;
+    //final settingsMap = await DBHelper.getSettingsMap();
+    //_currencySymbol = settingsMap['currency'];
+    //_showCurrency = settingsMap['showCurrency'] == 1;
 
     try {
       var hClient = http.Client();
@@ -74,12 +73,12 @@ class Settings with ChangeNotifier {
   set currencySymbol(String? currencySymbol) {
     _currencySymbol = currencySymbol;
     notifyListeners();
-    DBHelper.updateSettings({'currency': currencySymbol});
+    //DBHelper.updateSettings({'currency': currencySymbol});
   }
 
   set showCurrency(bool showCurrency) {
     _showCurrency = showCurrency;
     notifyListeners();
-    DBHelper.updateSettings({'showCurrency': showCurrency ? 1 : 0});
+    // DBHelper.updateSettings({'showCurrency': showCurrency ? 1 : 0});
   }
 }

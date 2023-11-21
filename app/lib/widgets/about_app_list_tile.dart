@@ -1,31 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 import '../globals.dart' as globals;
 
 class AboutAppListTile extends StatelessWidget {
-  Future<void> launchUrl(BuildContext context, String url) async {
-    if (await urlLauncher.canLaunch(url)) {
-      await urlLauncher.launch(url);
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Could not open URL'),
-            content: Text(url + ' could not be opened'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('GOT IT'),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return AboutListTile(

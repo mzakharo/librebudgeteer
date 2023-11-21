@@ -2,7 +2,7 @@ import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/db_helper.dart';
+//import '../utils/db_helper.dart';
 import '../models/transaction.dart';
 import './insights_range.dart';
 import './labels.dart';
@@ -323,7 +323,7 @@ class Transactions with ChangeNotifier {
           date: transaction.date,
           labelId: newLabelId,
         );
-        DBHelper.updateTransaction(_items[i]);
+        // DBHelper.updateTransaction(_items[i]);
       }
     }
   }
