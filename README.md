@@ -8,7 +8,7 @@ An open source Budget Flutter app
 - multiple users (couples budgeting)
 - transaction and balanaces data is synced to your own InfluxDB database instance
 - transaction rules and budget categories are hosted in notion.so
-- App tested to run on Android/Windows/Linux. MacOS/iOS runtime has not been verified.
+- App tested to run on Android/Windows/Linux/Chrome\*. MacOS/iOS runtime has not been verified.
 
 <img src="https://github.com/mzakharo/librebudgeteer/blob/main/images/dashboard.jpg" width="151" height="320"> <img src="https://github.com/mzakharo/librebudgeteer/blob/main/images/budgets.jpg" width="151" height="320"> <img src="https://github.com/mzakharo/librebudgeteer/blob/main/images/expenses.jpg" width="151" height="320"> <img src="https://github.com/mzakharo/librebudgeteer/blob/main/images/history.jpg" width="151" height="320"> 
 
@@ -19,5 +19,7 @@ An open source Budget Flutter app
  - Setup influxDB database (I run mine from a docker container on a Raspberry PI). Setup a bucket for keeping transaction data
  - Setup [plaid-sync](https://github.com/mzakharo/librebudgeteer/tree/main/plaid-sync)
  - Build and run the [app](https://github.com/mzakharo/librebudgeteer/tree/main/app)
+
+
    
  
