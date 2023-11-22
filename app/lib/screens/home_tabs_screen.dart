@@ -29,7 +29,7 @@ class _HomeTabsScreenState extends State<HomeTabsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Budget'),
+        title: const Text('LibreBudgeteer'),
       ),
       drawer: AppDrawer(),
       body: RefreshIndicator(

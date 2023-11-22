@@ -34,7 +34,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
           children: <Widget>[
             const Spacer(flex: 1),
             Container(
-                height: 600,
+                height: 570,
                 child: SingleChildScrollView(
                     child: Container(
                   // Uneven because room is needed for ScrollingPageIndicator.

@@ -23,7 +23,7 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
         children: <Widget>[
           SizedBox(
             // This is the height of the BalanceSummaryCard.
-            height: 135,
+            height: 136,
             child: BalanceSummaryCard(
               title: 'Net Balance',
               balance: transactionsData.balance,
