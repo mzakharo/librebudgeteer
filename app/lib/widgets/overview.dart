@@ -122,7 +122,7 @@ class _OverviewState extends State<Overview> {
               bottom: 12,
             ),
             child: LineChart(
-              mainData(pre, post, settingsData.income_amount),
+              mainData(pre, post, (settingsData.income_amount != 0) ? settingsData.income_amount : null),
             ),
           ),
         ),
@@ -157,7 +157,7 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  LineChartData mainData(List<FlSpot> pre, List<FlSpot> post, double maxy) {
+  LineChartData mainData(List<FlSpot> pre, List<FlSpot> post, double? maxy) {
     return LineChartData(
       titlesData: FlTitlesData(
         show: true,
