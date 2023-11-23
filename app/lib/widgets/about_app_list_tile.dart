@@ -10,14 +10,14 @@ class AboutAppListTile extends StatelessWidget {
       child: const Text('About'),
       applicationIcon: Image.asset(
         'assets/icon/launcher_icon.png',
-        height: 75,
-        width: 75,
+        height: 50,
+        width: 50,
       ),
-      applicationLegalese: 'Made by Mikhail Zakharov',
+      applicationLegalese: 'By Mikhail Zakharov',
       applicationVersion: globals.version,
       aboutBoxChildren: <Widget>[
         const SizedBox(height: 12),
-        const Text('A beautiful and informative budgeting app'),
+        const Text('A Budgeting app'),
         const SizedBox(height: 7),
       ],
     );
