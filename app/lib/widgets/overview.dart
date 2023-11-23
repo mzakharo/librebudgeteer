@@ -113,7 +113,7 @@ class _OverviewState extends State<Overview> {
     return Stack(
       children: <Widget>[
         AspectRatio(
-          aspectRatio: 1.70,
+          aspectRatio: 2,
           child: Padding(
             padding: const EdgeInsets.only(
               right: 18,

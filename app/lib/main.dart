@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
 
         return Consumer<ThemeProvider>(
           builder: (context, themeProvider, _) => MaterialApp(
-            title: 'Budget',
+            title: 'LibreBudgeteer',
             theme: themeProvider.themeData,
             initialRoute: '/',
             home: HomeTabsScreen(),

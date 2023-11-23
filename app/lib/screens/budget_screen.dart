@@ -32,17 +32,26 @@ class _BudgetScreenState extends State<BudgetScreen> {
         color: Theme.of(context).brightness == Brightness.light ? Theme.of(context).colorScheme.expenseColor : Theme.of(context).canvasColor,
         child: Column(
           children: <Widget>[
-            const Spacer(flex: 1),
+            const Spacer(flex: 4),
+            Text(
+              "Budget",
+              style: GoogleFonts.cabin(
+                color: Colors.white,
+                fontSize: 30,
+              ),
+            ),
+            const Spacer(flex: 3),
             Container(
-                height: 570,
+                margin: const EdgeInsets.only(left: 18, right: 25),
+                height: 500,
                 child: SingleChildScrollView(
                     child: Container(
                   // Uneven because room is needed for ScrollingPageIndicator.
-                  margin: const EdgeInsets.only(left: 5, right: 5),
+                  //margin: const EdgeInsets.only(left: 5, right: 5),
                   height: 1000,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(1),
+                    borderRadius: BorderRadius.circular(13),
                     border: Theme.of(context).brightness == Brightness.light
                         ? null
                         : Border.all(color: Theme.of(context).colorScheme.expenseColor, width: 5),
