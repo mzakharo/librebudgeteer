@@ -101,7 +101,7 @@ class _OverviewState extends State<Overview> {
     List<FlSpot> post = [];
     rolling = 0.0;
     int last_day = 1;
-    if (items[0].day != 1) post.add(FlSpot(1, rolling));
+    if (items.length == 0 || items[0].day != 1) post.add(FlSpot(1, rolling));
     items.forEach((element) {
       rolling -= element.amount;
       last_day = element.day;
