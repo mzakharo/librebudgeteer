@@ -12,14 +12,13 @@ class TransactionCard extends StatelessWidget {
   const TransactionCard({required this.transaction});
 
   // This looks better than a chip.
-  Widget buildCategoryLabel(
-      ThemeData theme, String title, Color? categoryColor) {
+  Widget buildCategoryLabel(ThemeData theme, String title, Color? categoryColor) {
     return Row(
       children: <Widget>[
         Container(
             //Here you can control the width of your container ..
             //when text exceeds it will be trancated via elipses...
-            width: 130.0,
+            width: 115.0,
             child: Text(
               title,
               softWrap: false,
@@ -55,9 +54,7 @@ class TransactionCard extends StatelessWidget {
                 height: 25,
                 width: 25,
                 decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .transactionTypeColor(transaction.amount),
+                  color: Theme.of(context).colorScheme.transactionTypeColor(transaction.amount),
                   borderRadius: BorderRadius.circular(6),
                 ),
               ),

@@ -20,7 +20,7 @@ class LabelFilterDropdown extends StatelessWidget {
         Container(
             //Here you can control the width of your container ..
             //when text exceeds it will be trancated via elipses...
-            width: 250.0,
+            width: 210.0,
             child: Text(
               title,
               softWrap: false,

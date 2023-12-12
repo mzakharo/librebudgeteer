@@ -43,7 +43,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
             const Spacer(flex: 3),
             Container(
                 margin: const EdgeInsets.only(left: 18, right: 25),
-                height: 500,
+                height: 465,
                 child: SingleChildScrollView(
                     child: Container(
                   // Uneven because room is needed for ScrollingPageIndicator.

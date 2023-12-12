@@ -87,7 +87,7 @@ class LabelsPieChart extends StatelessWidget {
             "\$${f.format(total)}",
             style: GoogleFonts.cabin(
               color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-              fontSize: 30,
+              fontSize: 20,
             ),
           ),
           Expanded(
@@ -103,6 +103,7 @@ class LabelsPieChart extends StatelessWidget {
                   desiredMaxColumns: 2,
                   desiredMaxRows: 3,
                   showMeasures: true,
+                  entryTextStyle: charts.TextStyleSpec(fontSize: 10),
                   legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
                   measureFormatter: (labelTotal) {
                     return '\$${(f.format(labelTotal!))}';

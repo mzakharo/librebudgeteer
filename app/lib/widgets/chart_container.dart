@@ -41,7 +41,7 @@ class ChartContainer extends StatelessWidget {
           Container(
             // Uneven because room is needed for ScrollingPageIndicator.
             margin: const EdgeInsets.only(left: 18, right: 25),
-            height: 500,
+            height: 465,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(13),

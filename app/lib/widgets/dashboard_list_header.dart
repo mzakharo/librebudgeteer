@@ -27,9 +27,7 @@ class DashboardListHeader extends StatelessWidget {
                       'History',
                       style: TextStyle(
                         fontSize: 16,
-                        color: themeData.brightness == Brightness.light
-                            ? Colors.black54
-                            : Colors.white54,
+                        color: themeData.brightness == Brightness.light ? Colors.black54 : Colors.white54,
                       ),
                     ),
                     LabelFilterDropdown(),
