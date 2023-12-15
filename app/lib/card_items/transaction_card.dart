@@ -18,14 +18,15 @@ class TransactionCard extends StatelessWidget {
         Container(
             //Here you can control the width of your container ..
             //when text exceeds it will be trancated via elipses...
-            width: 115.0,
+            width: 110.0,
             child: Text(
               title,
               softWrap: false,
               style: theme.textTheme.bodySmall,
+              textAlign: TextAlign.right,
               overflow: TextOverflow.ellipsis,
             )),
-        const SizedBox(width: 5),
+        const SizedBox(width: 4),
         CircleAvatar(
           maxRadius: 6,
           backgroundColor: categoryColor,
