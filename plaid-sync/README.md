@@ -5,45 +5,11 @@ Original sources taken from https://github.com/mbafford/plaid-sync
 
 `plaid-sync` is a Python based command-line interface to the [Plaid API](https://plaid.com/docs/api/) that synchronizes your bank/credit card transactions to InfluxDB Database
 
-
-## Plaid
-
-Plaid's API provides a way to connect to your bank accounts to obtain transactions
-and balance data from a large variety of banks in a standardized way. Plaid offers a "free forever" developer program with 100 accounts supported, and a pay as you go "Launch" program with no publicly stated pricing, but once you're signed up you have access to the pricing details. API keys (beyond the fake data sandbox mode) are gated behind a customer service agent approving your use-case.
-
-For more details, see [Plaid's website](https://dashboard.plaid.com/signup).
-
-## Plaid Link
-
-Plaid no longer supports an API-based method for establishing new accounts or updating
-existing accounts with credentials (username, password). This helps prevent third party
-programs from getting access to user's credentials, but also makes programs like this
-have to go through some more hoops to set up. 
-
-Specifically, you have to use the [Plaid Link API](https://plaid.com/docs/link/), and run that in a web browser. That the uses iframes to isolate the credentials updates to
-just Plaid's servers/code. 
-
-This program incorporates a very simple webserver to handle the Plaid Link portion. This is only needed when setting up a new account, or when an existing account needs a credentials refresh. In my experience, the credentials refresh is going to happen periodically - one bank has a 90 day policy, another needed it after I was locked out of my account due to invalid login attempts. 
-
-## Limitations
-
-Plaid's lower tiers do not provide investment or libabilities details, so this cannot
-sync mortgage or brokerage transactions. It does work fine with all of the credit card and bank accounts I need it to.
-
 # Usage
 
 ## Installation
 
-Developed for Python 3.7.4.
-
-There is only one mandatory external dependency, the Plaid API (`plaid-python==7.1.0`).
-
-There is one optional depenency, [`tqdm`](https://github.com/tqdm/tqdm), if you want fancy progress bars during syncing. If you don't install it, you just get unfancy print
-messages. My current account load takes about 4 seconds to sync.
-
-This is not set up to be run/installed as a command line program, but could be easily done so.
-
-My standard approach is to clone the repository, set up a virtual environment, and install the necessary dependencies in that environment.
+python[3] -m pip install -r requirements.txt
 
 ## Configuration
 
@@ -51,7 +17,8 @@ Establish a configuration file with your Plaid credentials. This is in standard 
 
 Once you've set up the basic credentials, run through linking a new account:
 
-```$ ./plaid-sync.py -c sandbox.example --link 'Test Chase'
+```$ python[3] plaid-sync.py -c sandbox.example --link 'Test Chase'
+
 Open the following page in your browser to continue:
     http://127.0.0.1:4583/link.html
 ```
