@@ -12,16 +12,18 @@ import datetime
 from datetime import tzinfo
 import sys
 
-
 config_file = 'config.ini'
 
-path = sys.argv[1] #'transactions/sept28_2024/'
-
+parser = argparse.ArgumentParser(description="Synchronize tangerine with InfluxDB database")
+parser.add_argument("-v", "--verbose",    dest="verbose",        action='store_true',  help="If set, status messages will be output during sync process.")
+parser.add_argument( "--dry",   dest="dry",       action='store_true',  help="If true, do not upload to influx")
+parser.add_argument('path', help="path with Tangerine CSV files")
+args = parser.parse_args()
 
 cfg = config.Config(config_file)
 
 
-all_files = glob.glob(os.path.join(path, "*.csv"))
+all_files = glob.glob(os.path.join(args.path, "*.csv"))
 
 df = pd.concat((pd.read_csv(f) for f in all_files), ignore_index=True)
 
@@ -67,8 +69,8 @@ for page in full_or_partial_pages["results"]:
     except Exception as e:
         print(e)
         continue
-
-print('notion rules', rules)
+if args.verbose:
+    print('notion rules', rules)
 filter_rules = list(filter(lambda d: d['replacement'] is None, rules))
 
 
@@ -168,7 +170,7 @@ def upload(transactions, cfg, start_date, end_date, verbose=False, dump=False, d
         .tag('account', t.account_id) \
         .tag('category', t.category[-1]) \
         .tag('id', t.transaction_id) \
-        .field('amount', -1.0 * t.amount)  \
+        .field('amount', t.amount)  \
         .time(int(date.timestamp() * 10**9), WritePrecision.NS)
         if not skip:
             if verbose:
@@ -181,7 +183,8 @@ transactions = []
 for _, row in df.iterrows():
     category = row['Memo'].split('Category:')
     if len(category) == 2:
-        category = category[-1]
+        category = category[-1].strip()
+        #print(f'category = "{category}"')
     else:
         category = 'Other'
     t = dict(name=row['Name'], category=[category], date=row['Date'], account_id='NA', transaction_id=row['hash'], pending=False, iso_currency_code='CA', amount=row['Amount'], merchant_name=None, authorized_date=None)
@@ -202,8 +205,13 @@ for _, row in df.iterrows():
 
 
 start_date = df['Date'].min().date()
-end_date = df['Date'].max().date()
-dry = True
-verbose = True
-upload(transactions,cfg, start_date, end_date, verbose=verbose, dump=False, dry=dry)
+end_date = (df['Date'].max() + datetime.timedelta(days=1)).date()
+
+
+
+
+
+
+
+upload(transactions,cfg, start_date, end_date, verbose=args.verbose, dump=False, dry=args.dry)
 
