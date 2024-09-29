@@ -130,10 +130,16 @@ def upload(transactions, cfg, start_date, end_date, verbose=False, dump=False, d
         ''' %(cfg.config['TANGERINE']['influx_bucket'], start_date, end_date))
         for table in tables:
             for row in table.records:
+                row['old'] = True if row['_value'] == 0 else False
                 if row['id'] not in old:                    
                     old[row['id']] = row  #could be deleted transaction, track it here
                 elif row['_value'] != 0:
+                    if old[row['id']]['old']:
+                        row['old'] = True
                     old[row['id']] = row  # we should only have one transaction with non-zero value
+                elif row['_value'] == 0:
+                    old[row['id']]['old'] = True
+                
     finally:
         client.close()
     
@@ -160,7 +166,24 @@ def upload(transactions, cfg, start_date, end_date, verbose=False, dump=False, d
                 print('skipping (out of range)', t)
             continue
         
-        skip = True if t.transaction_id in old else False  
+        skip = True if t.transaction_id in old else False
+
+        if skip and t.category[-1] != old[t.transaction_id]['category'] and not old[t.transaction_id]['old']:
+            skip = False
+            tt = old[t.transaction_id]
+            print(tt)
+            point = Point("transactions")\
+            .tag("payee", tt['payee']) \
+            .tag("memo", tt['memo']) \
+            .tag('account', tt['account']) \
+            .tag('category', tt['category']) \
+            .tag('id', tt['id']) \
+            .field('amount', 0.0)  \
+            .time(int(date.timestamp() * 10**9), WritePrecision.NS)
+            if verbose:
+                print(point.to_line_protocol(), end='\n~~~~~~~~~~~~~~~~~~~~~~\n')
+            if not dry:
+                write_api.write(cfg.config['TANGERINE']['influx_bucket'], cfg.config['TANGERINE']['influx_org'], point)
         if verbose:
             print('skip', skip, t)
 
