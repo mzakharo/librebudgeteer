@@ -21,8 +21,9 @@ String notion_database = "DB_BUDGETS_UUID";
 This App was tested with:
  
 ```
-Flutter 3.19.3 • channel stable • https://github.com/flutter/flutter.git
-Tools • Dart 3.3.1 • DevTools 2.31.1
+Flutter 3.24.4 • channel stable • https://github.com/flutter/flutter.git
+Engine • revision db49896cf2
+Tools • Dart 3.5.4 • DevTools 2.37.3
 ```
 
 Build Targets:
