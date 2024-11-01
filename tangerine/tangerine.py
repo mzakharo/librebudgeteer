@@ -9,8 +9,8 @@ from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS, ASYNCHRONOUS
 import argparse
 import datetime
-from datetime import tzinfo
 import sys
+
 
 config_file = 'config.ini'
 
@@ -30,15 +30,19 @@ df = pd.concat((pd.read_csv(f) for f in all_files), ignore_index=True)
 df['Date'] = df['Transaction date'].combine_first(df['Date'])
 df.pop('Transaction date')
 df['Date'] = pd.to_datetime(df['Date'], format='%m/%d/%Y')
-
-
+df.set_index('Date',  inplace=True)
+df.sort_index(inplace=True)
 df['hash'] = df.apply(joblib.hash, axis=1)
 
+for _, dup in df[df.duplicated('hash', keep='first')].iterrows():
+    l = []
+    for (i, ( _, d))in enumerate(df.loc[df['hash'] == dup['hash']].iterrows()):
+        l.append(d['hash'] + f'_{i}')
+    df.loc[df['hash'] == dup['hash'], 'hash']= l
 
-print(df)
-
-
-
+with pd.option_context('display.max_rows', None):  # more options can be specified also
+    print(df)
+#sys.exit(0)
 
 notion_secret = cfg.config['TANGERINE']['notion_secret']
 notion_database = cfg.config['TANGERINE']['notion_database']
@@ -63,15 +67,20 @@ for page in full_or_partial_pages["results"]:
                 method = 'in'
             else:
                 key = t['name']
+        if len(page['properties']['Rule']['title']) == 0:
+            continue
         title = page['properties']['Rule']['title'][0]['text']['content']
         d = dict(replacement=replacement, title=title, method=method, key=key)
         rules.append(d)
     except Exception as e:
-        print(e)
-        continue
+        raise
 if args.verbose:
     print('notion rules', rules)
+    
 filter_rules = list(filter(lambda d: d['replacement'] is None, rules))
+if args.verbose:
+    print('filter rules', filter_rules)
+
 
 
 
@@ -196,39 +205,44 @@ def upload(transactions, cfg, start_date, end_date, verbose=False, dump=False, d
         .field('amount', t.amount)  \
         .time(int(date.timestamp() * 10**9), WritePrecision.NS)
         if not skip:
-            if verbose:
-                print(point.to_line_protocol(), end='\n~~~~~~~~~~~~~~~~~~~~~~\n')
+            #if verbose:
+            #    print(point.to_line_protocol(), end='\n~~~~~~~~~~~~~~~~~~~~~~\n')
             if not dry:
                 write_api.write(cfg.config['TANGERINE']['influx_bucket'], cfg.config['TANGERINE']['influx_org'], point)
     client.close()
 
 transactions = []
-for _, row in df.iterrows():
-    category = row['Memo'].split('Category:')
+for date, row in df.iterrows():
+    try:
+        category = row['Memo'].split('Category:')
+    except AttributeError:
+        category = []
     if len(category) == 2:
         category = category[-1].strip()
         #print(f'category = "{category}"')
     else:
         category = 'Other'
-    t = dict(name=row['Name'], category=[category], date=row['Date'], account_id='NA', transaction_id=row['hash'], pending=False, iso_currency_code='CA', amount=row['Amount'], merchant_name=None, authorized_date=None)
+    t = dict(name=row['Name'], category=[category], date=date, account_id='NA', transaction_id=row['hash'], pending=False, iso_currency_code='CA', amount=row['Amount'], merchant_name=None, authorized_date=None)
+    
+    skip = False
     for rule in filter_rules:
-        skip = False
         if rule['method'] == 'exact' and rule['title'] == t[rule['key']]:
             skip = True
             break
         elif rule['method'] == 'in' and rule['title'] in t[rule['key']]:
             skip = True
             break
-        if t['pending']:
-            skip = True
-        if skip:
-            continue
+    if t['pending']:
+        skip = True
+    if skip:
+        print('filter', t)
+        continue
     transactions.append(Transaction(t, rules))
 
 
 
-start_date = df['Date'].min().date()
-end_date = (df['Date'].max() + datetime.timedelta(days=1)).date()
+start_date = df.index.min().date()
+end_date = (df.index.max() + datetime.timedelta(days=1)).date()
 
 
 
