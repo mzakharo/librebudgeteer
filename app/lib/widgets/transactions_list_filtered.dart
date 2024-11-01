@@ -8,7 +8,7 @@ import '../providers/labels.dart';
 import '../providers/insights_range.dart';
 import '../screens/transaction_details_screen.dart';
 import '../utils/custom_colors.dart';
-
+import '../models/transaction.dart';
 // Used in HistoryScreen.
 
 class TransactionsListFiltered extends StatelessWidget {
@@ -33,12 +33,16 @@ class TransactionsListFiltered extends StatelessWidget {
     final transactionsData = Provider.of<Transactions>(context);
     final labelsData = Provider.of<Labels>(context, listen: false);
     var label = labelsData.findById(filterLabelId);
-    var filteredTransactions;
+    List<Transaction> filteredTransactions;
     if (label == null) {
       filteredTransactions = transactionsData.filterTransactionsByRange(range);
     } else {
-      filteredTransactions = transactionsData.filterTransactionsByLabelAndRange(context, filterLabelId, range);
+      filteredTransactions = transactionsData.filterTransactionsByLabelAndRange(
+          context, filterLabelId, range);
     }
+    filteredTransactions = filteredTransactions
+        .where((transaction) => transaction.amount < 0)
+        .toList();
 
     if (transactionsData.items.isEmpty) {
       return buildEmptyListMessage('No transactions for this filter!');
@@ -54,7 +58,8 @@ class TransactionsListFiltered extends StatelessWidget {
           return Column(
             children: <Widget>[
               OpenContainer(
-                closedColor: Theme.of(context).colorScheme.transactionCards(context),
+                closedColor:
+                    Theme.of(context).colorScheme.transactionCards(context),
                 openColor: Theme.of(context).colorScheme.surface,
                 closedShape: const BeveledRectangleBorder(),
                 closedElevation: 0,

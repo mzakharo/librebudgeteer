@@ -21,7 +21,8 @@ class _BarData2 {
 
 // This screen is a screen under home_screen.
 class _BarData {
-  const _BarData(this.color, this.note, this.value, this.shadowValue, this.icon, this.label, this.labelTotal, this.range);
+  const _BarData(this.color, this.note, this.value, this.shadowValue, this.icon,
+      this.label, this.labelTotal, this.range);
   final Color color;
   final double value;
   final String note;
@@ -67,7 +68,8 @@ class _IconWidget extends ImplicitlyAnimatedWidget {
   final IconData icon;
 
   @override
-  ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() => _IconWidgetState();
+  ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() =>
+      _IconWidgetState();
 }
 
 class _IconWidgetState extends AnimatedWidgetBaseState<_IconWidget> {
@@ -149,7 +151,10 @@ class _BudgetPicChartState extends State<BudgetsPieChart> {
 
     final settingsData = Provider.of<Settings>(context, listen: false);
 
-    final transactions = transactionsData.filterTransactionsByRange(range);
+    List<Transaction> transactions =
+        transactionsData.filterTransactionsByRange(range);
+    transactions =
+        transactions.where((transaction) => transaction.amount < 0).toList();
 
     double budgeted_amount = 0.0;
     double budgeted_total = 0.0;
@@ -170,8 +175,15 @@ class _BudgetPicChartState extends State<BudgetsPieChart> {
           over_amount += amount - element.limit;
         }
         var value = (amount / element.limit * 100).toInt();
-        dataList.add(_BarData(AppColors.contentColorPink, '${amount.toInt()} / ${element.limit.toInt()}\n${element.label}', value.toDouble(), 100,
-            Icons.access_alarm, element.label, [], range));
+        dataList.add(_BarData(
+            AppColors.contentColorPink,
+            '${amount.toInt()} / ${element.limit.toInt()}\n${element.label}',
+            value.toDouble(),
+            100,
+            Icons.access_alarm,
+            element.label,
+            [],
+            range));
         //print('${element.label}  ${label} ${element.limit} ${value}');
       }
     });
@@ -187,7 +199,8 @@ class _BudgetPicChartState extends State<BudgetsPieChart> {
     month_total = month_total.abs();
 
     var everything_else = month_total - budgeted_amount;
-    var everything_else_total = settingsData.income_amount - budgeted_total - over_amount;
+    var everything_else_total =
+        settingsData.income_amount - budgeted_total - over_amount;
     if (everything_else_total <= 0) {
       everything_else_total = 1;
     }
@@ -201,7 +214,8 @@ class _BudgetPicChartState extends State<BudgetsPieChart> {
         amount = 0; //only for everything else
       }
       if (max_amount < amount) max_amount = amount;
-      return _BarData2(label.color, '\$${amount.toInt()}: ${label.id}', amount, label.id, range);
+      return _BarData2(label.color, '\$${amount.toInt()}: ${label.id}', amount,
+          label.id, range);
     }).toList();
     lableAmounts.removeWhere(
       (label) => label.value == 0,
@@ -214,14 +228,28 @@ class _BudgetPicChartState extends State<BudgetsPieChart> {
 
     dataList.insert(
         0,
-        _BarData(AppColors.contentColorPink, '${everything_else.toInt()} / ${everything_else_total.toInt()}\nEverything Else', value.toDouble(), 100,
-            Icons.access_alarm, "Everything Else", lableAmounts, range));
+        _BarData(
+            AppColors.contentColorPink,
+            '${everything_else.toInt()} / ${everything_else_total.toInt()}\nEverything Else',
+            value.toDouble(),
+            100,
+            Icons.access_alarm,
+            "Everything Else",
+            lableAmounts,
+            range));
 
     value = ((month_total / settingsData.income_amount) * 100).toInt();
     dataList.insert(
         0,
-        _BarData(AppColors.contentColorPink, '${month_total.toInt()} / ${settingsData.income_amount.toInt()}\nTotal Spending', value.toDouble(), 100,
-            Icons.access_alarm, "Total Spending", [], range));
+        _BarData(
+            AppColors.contentColorPink,
+            '${month_total.toInt()} / ${settingsData.income_amount.toInt()}\nTotal Spending',
+            value.toDouble(),
+            100,
+            Icons.access_alarm,
+            "Total Spending",
+            [],
+            range));
 
     var seriesList = [
       new charts.Series<_BarData, String>(
@@ -232,11 +260,12 @@ class _BudgetPicChartState extends State<BudgetsPieChart> {
               : (v.value == 0)
                   ? 1
                   : v.value,
-          colorFn: (_BarData v, _) => charts.ColorUtil.fromDartColor((v.value > 100)
-              ? Color(0xFFFF683B)
-              : (v.value > 90)
-                  ? Color(0xFF8B8000)
-                  : AppColors.contentColorBlue),
+          colorFn: (_BarData v, _) =>
+              charts.ColorUtil.fromDartColor((v.value > 100)
+                  ? Color(0xFFFF683B)
+                  : (v.value > 90)
+                      ? Color(0xFF8B8000)
+                      : AppColors.contentColorBlue),
           data: dataList,
           // Set a label accessor to control the text of the bar label.
           labelAccessorFn: (_BarData v, _) => '${v.note}')
@@ -260,11 +289,17 @@ class _BudgetPicChartState extends State<BudgetsPieChart> {
       ],
       barRendererDecorator: new charts.BarLabelDecorator<String>(
           labelPosition: charts.BarLabelPosition.auto,
-          outsideLabelStyleSpec:
-              charts.TextStyleSpec(fontSize: 12, color: Theme.of(context).brightness == Brightness.light ? charts.Color.black : charts.Color.white)),
+          outsideLabelStyleSpec: charts.TextStyleSpec(
+              fontSize: 12,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? charts.Color.black
+                  : charts.Color.white)),
       // Hide domain axis.
-      domainAxis: new charts.OrdinalAxisSpec(renderSpec: new charts.NoneRenderSpec()),
-      primaryMeasureAxis: new charts.NumericAxisSpec(renderSpec: new charts.NoneRenderSpec(), viewport: charts.NumericExtents(0, 100)),
+      domainAxis:
+          new charts.OrdinalAxisSpec(renderSpec: new charts.NoneRenderSpec()),
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+          renderSpec: new charts.NoneRenderSpec(),
+          viewport: charts.NumericExtents(0, 100)),
     );
   }
 
@@ -274,7 +309,8 @@ class _BudgetPicChartState extends State<BudgetsPieChart> {
     if (selectedDatum.isNotEmpty) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => SecondRoute(selectedDatum.first.datum)),
+        MaterialPageRoute(
+            builder: (context) => SecondRoute(selectedDatum.first.datum)),
       );
     }
   }
@@ -292,7 +328,8 @@ class SecondRoute extends StatelessWidget {
       if (selectedDatum.isNotEmpty) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ThirdRoute(selectedDatum.first.datum)),
+          MaterialPageRoute(
+              builder: (context) => ThirdRoute(selectedDatum.first.datum)),
         );
       }
     }
@@ -306,11 +343,12 @@ class SecondRoute extends StatelessWidget {
               : (v.value == 0)
                   ? 1
                   : v.value,
-          colorFn: (_BarData2 v, _) => charts.ColorUtil.fromDartColor((v.value > 100)
-              ? Color(0xFFFF683B)
-              : (v.value > 90)
-                  ? Color(0xFF8B8000)
-                  : AppColors.contentColorBlue),
+          colorFn: (_BarData2 v, _) =>
+              charts.ColorUtil.fromDartColor((v.value > 100)
+                  ? Color(0xFFFF683B)
+                  : (v.value > 90)
+                      ? Color(0xFF8B8000)
+                      : AppColors.contentColorBlue),
           data: val.labelTotal,
           // Set a label accessor to control the text of the bar label.
           labelAccessorFn: (_BarData2 v, _) => '${v.note}')
@@ -335,11 +373,17 @@ class SecondRoute extends StatelessWidget {
       ],
       barRendererDecorator: new charts.BarLabelDecorator<String>(
           labelPosition: charts.BarLabelPosition.auto,
-          outsideLabelStyleSpec:
-              charts.TextStyleSpec(fontSize: 12, color: Theme.of(context).brightness == Brightness.light ? charts.Color.black : charts.Color.white)),
+          outsideLabelStyleSpec: charts.TextStyleSpec(
+              fontSize: 12,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? charts.Color.black
+                  : charts.Color.white)),
       // Hide domain axis.
-      domainAxis: new charts.OrdinalAxisSpec(renderSpec: new charts.NoneRenderSpec()),
-      primaryMeasureAxis: new charts.NumericAxisSpec(renderSpec: new charts.NoneRenderSpec(), viewport: charts.NumericExtents(0, 100)),
+      domainAxis:
+          new charts.OrdinalAxisSpec(renderSpec: new charts.NoneRenderSpec()),
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+          renderSpec: new charts.NoneRenderSpec(),
+          viewport: charts.NumericExtents(0, 100)),
     );
 
     return Scaffold(

@@ -36,16 +36,21 @@ class LabelsPieChart extends StatelessWidget {
     final labels = Provider.of<Labels>(context, listen: false);
     final transactionData = Provider.of<Transactions>(context, listen: false);
     final range = Provider.of<InsightsRange>(context).range;
-    final transactions = transactionData.filterTransactionsByRange(range);
+    List<Transaction> transactions =
+        transactionData.filterTransactionsByRange(range);
+
+    if (labelType == LabelType.INCOME) {
+      transactions =
+          transactions.where((transaction) => transaction.amount > 0).toList();
+    } else {
+      transactions =
+          transactions.where((transaction) => transaction.amount < 0).toList();
+    }
 
     final lableAmounts = labels.items.map((label) {
       double amount = getLabelTotalWithRange(transactions, label.id);
-      if (labelType == LabelType.INCOME) {
-        if (amount < 0) amount = 0;
-      } else {
-        amount = (amount > 0) ? 0 : -amount;
-      }
-      return LabelTotal(amount: amount, color: label.color, title: label.title);
+      return LabelTotal(
+          amount: amount.abs(), color: label.color, title: label.title);
     }).toList();
 
     // Remove the labels with 0 transactions so there's no extra labels.
@@ -86,7 +91,9 @@ class LabelsPieChart extends StatelessWidget {
           Text(
             "\$${f.format(total)}",
             style: GoogleFonts.cabin(
-              color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white,
               fontSize: 20,
             ),
           ),
@@ -113,7 +120,9 @@ class LabelsPieChart extends StatelessWidget {
               pieData: filterlabels
                   .map(
                     (label) => PieChartModel(
-                      label: (label.title.length > 11) ? label.title.substring(0, 11) : label.title,
+                      label: (label.title.length > 11)
+                          ? label.title.substring(0, 11)
+                          : label.title,
                       amount: label.amount,
                       color: label.color,
                     ),
