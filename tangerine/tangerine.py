@@ -219,9 +219,11 @@ for date, row in df.iterrows():
         category = []
     if len(category) == 2:
         category = category[-1].strip()
+        if category == 'Other':
+            category = 'Other Expense' if row['Amount'] < 0 else 'Other Income'
         #print(f'category = "{category}"')
     else:
-        category = 'Other'
+        category = 'Other Expense' if row['Amount'] < 0 else 'Other Income'
     t = dict(name=row['Name'], category=[category], date=date, account_id='NA', transaction_id=row['hash'], pending=False, iso_currency_code='CA', amount=row['Amount'], merchant_name=None, authorized_date=None)
     
     skip = False
