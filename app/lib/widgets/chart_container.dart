@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/insights_range_buttons.dart';
 
@@ -26,15 +25,18 @@ class ChartContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).brightness == Brightness.light ? backgroundColor : Theme.of(context).canvasColor,
+      color: Theme.of(context).brightness == Brightness.light
+          ? backgroundColor
+          : Theme.of(context).canvasColor,
       child: Column(
         children: <Widget>[
           const Spacer(flex: 4),
           Text(
             title,
-            style: GoogleFonts.cabin(
+            style: TextStyle(
               color: Colors.white,
               fontSize: 30,
+              fontFamily: 'Roboto', // Replace GoogleFonts with built-in font
             ),
           ),
           const Spacer(flex: 3),
@@ -45,7 +47,9 @@ class ChartContainer extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(13),
-              border: Theme.of(context).brightness == Brightness.light ? null : Border.all(color: backgroundColor!, width: 5),
+              border: Theme.of(context).brightness == Brightness.light
+                  ? null
+                  : Border.all(color: backgroundColor!, width: 5),
             ),
             child: chart,
           ),

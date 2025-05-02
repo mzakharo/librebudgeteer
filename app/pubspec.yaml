@@ -30,16 +30,14 @@ dependencies:
   charts_flutter:
     git:
       url: https://github.com/mzakharo/charts_flutter.git
-      ref: master
+      ref: 45c529764745766bfe3003dcc3318d6d1e194b31
       path: charts_flutter
   flutter_colorpicker: ^1.0.3
   smooth_page_indicator: ^1.0.0+2
   settings_ui: ^2.0.1
-  google_fonts: ^5.0.0
   path: ^1.6.4
   collection: ^1.15.0-nullsafety.4
   influxdb_client: ^2.9.0
-  package_info_plus: ^4.1.0
   fl_chart: ^0.64.0
   notion_sdk:
     git:

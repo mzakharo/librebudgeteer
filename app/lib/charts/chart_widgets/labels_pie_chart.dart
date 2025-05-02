@@ -9,7 +9,6 @@ import '../../providers/insights_range.dart';
 import '../../providers/labels.dart';
 import '../../providers/transactions.dart';
 import '../../models/transaction.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class LabelTotal {
@@ -90,11 +89,12 @@ class LabelsPieChart extends StatelessWidget {
         children: <Widget>[
           Text(
             "\$${f.format(total)}",
-            style: GoogleFonts.cabin(
+            style: TextStyle(
               color: Theme.of(context).brightness == Brightness.light
                   ? Colors.black
                   : Colors.white,
-              fontSize: 20,
+              fontSize: 30,
+              fontFamily: 'Roboto', // Replace GoogleFonts with built-in font
             ),
           ),
           Expanded(

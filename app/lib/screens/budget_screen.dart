@@ -6,8 +6,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../utils/custom_colors.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
 import '../widgets/budgets_range_buttons.dart';
 import '../charts/chart_widgets/budgets_bar_chart.dart';
 
@@ -29,15 +27,18 @@ class _BudgetScreenState extends State<BudgetScreen> {
   Widget build(BuildContext context) {
     final _graphScreens = <Widget>[
       Container(
-        color: Theme.of(context).brightness == Brightness.light ? Theme.of(context).colorScheme.expenseColor : Theme.of(context).canvasColor,
+        color: Theme.of(context).brightness == Brightness.light
+            ? Theme.of(context).colorScheme.expenseColor
+            : Theme.of(context).canvasColor,
         child: Column(
           children: <Widget>[
             const Spacer(flex: 4),
             Text(
               "Budget",
-              style: GoogleFonts.cabin(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 30,
+                fontFamily: 'Roboto', // Replace GoogleFonts with built-in font
               ),
             ),
             const Spacer(flex: 3),
@@ -54,7 +55,9 @@ class _BudgetScreenState extends State<BudgetScreen> {
                     borderRadius: BorderRadius.circular(13),
                     border: Theme.of(context).brightness == Brightness.light
                         ? null
-                        : Border.all(color: Theme.of(context).colorScheme.expenseColor, width: 5),
+                        : Border.all(
+                            color: Theme.of(context).colorScheme.expenseColor,
+                            width: 5),
                   ),
                   child: BudgetsPieChart(),
                 ))),
@@ -87,7 +90,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
             controller: _pageController,
             count: _graphScreens.length,
             axisDirection: Axis.vertical,
-            effect: SlideEffect(spacing: 16, dotColor: Colors.white30, activeDotColor: Colors.white),
+            effect: SlideEffect(
+                spacing: 16,
+                dotColor: Colors.white30,
+                activeDotColor: Colors.white),
           ),
         ),
       ],

@@ -16,23 +16,22 @@ String notion_database = "DB_BUDGETS_UUID";
 ```
 
  - [Install](https://docs.flutter.dev/get-started/install) flutter.
- - run `flutter doctor -v` to make sure everything is kosher.
- 
-This App was tested with:
- 
-```
-Flutter 3.24.4 • channel stable • https://github.com/flutter/flutter.git
-Engine • revision db49896cf2
-Tools • Dart 3.5.4 • DevTools 2.37.3
-```
+ - run `flutter doctor -v` . Tested environment:
 
+ ```
+ [√] Flutter (Channel stable, 3.29.3)
+    • Engine revision cf56914b32
+    • Dart version 3.7.2
+    • DevTools version 2.42.3
+
+[√] Android Studio (version 2024.3) [28ms]
+    • Java version OpenJDK Runtime Environment (build 21.0.6+-13355223-b631.42)
+ ```
+ 
 Build Targets:
 
  - Android Debug: Connect Phone via USB, with USB Debugging enabled: `flutter run`
  - Android release: `flutter build apk --release`
  - Windows: `flutter run -d windows`
- - Linux: `flutter run -d linux`
- - Web\Chrome: `flutter run -d chrome`
-   - Due to dependency on notion.so, CORS must be [disabled](https://stackoverflow.com/questions/65630743/how-to-solve-flutter-web-api-cors-error-only-with-dart-code) for budgets to work in the app.
 
-App originally sourced from https://github.com/rsquared226/budget_my_life
+Inspired by https://github.com/rsquared226/budget_my_life

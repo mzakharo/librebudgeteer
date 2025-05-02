@@ -12,8 +12,6 @@ import './screens/edit_labels_screen.dart';
 import './screens/settings_screen.dart';
 import 'globals.dart' as globals;
 
-import 'package:package_info_plus/package_info_plus.dart';
-
 Future<void> main() async {
   // Add custom font license.
   LicenseRegistry.addLicense(() async* {
@@ -24,9 +22,7 @@ Future<void> main() async {
   // Needed for onboarding.
   WidgetsFlutterBinding.ensureInitialized();
 
-  PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-  globals.version = packageInfo.version;
+  globals.version = "1.0.0";
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
