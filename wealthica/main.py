@@ -18,7 +18,7 @@ import sys
 
 config_file = 'config.ini'
 
-parser = argparse.ArgumentParser(description="Synchronize tangerine with InfluxDB database")
+parser = argparse.ArgumentParser(description="Synchronize with InfluxDB database")
 parser.add_argument("-v", "--verbose",    dest="verbose",        action='store_true',  help="If set, status messages will be output during sync process.")
 parser.add_argument( "--dry",   dest="dry",       action='store_true',  help="If true, do not upload to influx")
 args = parser.parse_args()
