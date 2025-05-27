@@ -1,0 +1,10 @@
+[WEALTHICA]
+influx_token = YYY
+influx_url = http://127.0.0.1:8086
+influx_org = org
+influx_bucket = bucket
+notion_secret = secret_XXXX
+notion_database = XXXXX
+gspread_api_key = YYYY
+gspread_sheet_key = ZZZ
+gspread_range = XYXYX
