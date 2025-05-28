@@ -1,0 +1,9 @@
+[Unit]
+Description=Run wealthica sync
+Requires=wealthica@.service
+[Timer]
+Unit=wealthica@.service
+OnUnitInactiveSec=6hours
+Persistent=true
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=wealthica sync service
+Wants=wealthica@.timer
+
+[Service]
+ExecStart=/usr/bin/python3 /home/%i/librebudgeteer/wealthica/main.py -v 
+WorkingDirectory=/home/%i/librebudgeteer/wealthica
+User=%i
+
+[Install]
+WantedBy=multi-user.target

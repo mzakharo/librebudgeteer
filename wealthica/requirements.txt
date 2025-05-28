@@ -2,3 +2,4 @@ pandas
 joblib
 notion_client
 influxdb_client
+gspread
