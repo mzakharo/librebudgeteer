@@ -36,8 +36,13 @@ df.set_index('Trade Date',  inplace=True)
 df.sort_index(inplace=True)
 df['Currency Amount'] = df['Currency Amount'].astype(float)
 
-with pd.option_context('display.max_rows', None):  # more options can be specified also
-    print(df)
+#with pd.option_context('display.max_rows', None):  # more options can be specified also
+print(df)
+
+sh = gc.open_by_key(cfg.config['WEALTHICA']['gspread_sheet_balances_key'])
+worksheet = sh.sheet1
+dfb = pd.DataFrame(worksheet.get_all_records())
+print(dfb)
 
 
 notion_secret = cfg.config['WEALTHICA']['notion_secret']
@@ -217,7 +222,51 @@ def upload(transactions, cfg, start_date, end_date, verbose=False, dump=False, d
             #    print(point.to_line_protocol(), end='\n~~~~~~~~~~~~~~~~~~~~~~\n')
             if not dry:
                 write_api.write(cfg.config['WEALTHICA']['influx_bucket'], cfg.config['WEALTHICA']['influx_org'], point)
+
     client.close()
+
+    net = 0    
+    types = {}
+    for _, row in dfb.iterrows():
+        amnt = row['Balance']
+        net += amnt
+        atype = row['Account Type']
+        if atype not in types:
+            types[atype] = 0.0
+        types[atype]  += amnt
+    ts = datetime.datetime.now().timestamp()          
+    points = []
+    for typ, v in types.items():
+        if v == 0.0:
+            continue
+        point = Point("balances")\
+        .tag('account',typ) \
+        .field('amount', v)  \
+        .time(int(ts * 10**9), WritePrecision.NS)
+        if verbose:
+            print(point.to_line_protocol(), end='\n~~~~~~~~~~~~~~~~~~~~~~\n')
+        points.append(point)
+    point = Point("balances")\
+        .tag('account','net') \
+        .field('amount', net)  \
+        .time(int(ts * 10**9), WritePrecision.NS)
+    if verbose:
+        print(point.to_line_protocol(), end='\n~~~~~~~~~~~~~~~~~~~~~~\n')
+    points.append(point)
+    if points:
+        client = InfluxDBClient(url=cfg.config['WEALTHICA']['influx_url'], token=cfg.config['WEALTHICA']['influx_token'], timeout=20000)
+        try:
+            write_api = client.write_api(write_options=ASYNCHRONOUS)
+            if not dry:
+                write_api.write(cfg.config['WEALTHICA']['influx_bucket'], cfg.config['WEALTHICA']['influx_org'], points)
+        finally:
+            client.close()
+    if verbose:
+        print('balance Net = ', net)
+
+
+
+
 
 start_date = df.index.min().date()
 end_date = (df.index.max() + datetime.timedelta(days=1)).date()
