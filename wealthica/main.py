@@ -41,9 +41,9 @@ print(df)
 
 sh = gc.open_by_key(cfg.config['WEALTHICA']['gspread_sheet_balances_key'])
 worksheet = sh.sheet1
-dfb = pd.DataFrame(worksheet.get_all_records())
+data = worksheet.get(cfg.config['WEALTHICA']['gspread_balances_range'])
+dfb = pd.DataFrame(data[1:], columns=data[0])
 print(dfb)
-
 
 notion_secret = cfg.config['WEALTHICA']['notion_secret']
 notion_database = cfg.config['WEALTHICA']['notion_database']
@@ -228,7 +228,7 @@ def upload(transactions, cfg, start_date, end_date, verbose=False, dump=False, d
     net = 0    
     types = {}
     for _, row in dfb.iterrows():
-        amnt = row['Balance']
+        amnt = float(row['Balance'])
         net += amnt
         atype = row['Account Type']
         if atype not in types:
